@@ -1,45 +1,49 @@
-# UART Kernel Driver Development
+# UART Kernel Module Development
 
 ## Overview
-This repository is dedicated to the development and understanding of a UART kernel driver in Linux. The project aims to delve into the intricacies of Linux kernel programming, specifically focusing on UART communication, which is a critical component in many embedded systems and devices.
+This repository contains the development files for a UART kernel module named `uart.ko`. This module is designed as a character device driver in Linux, with functionalities determined by passed parameters. It focuses on handling UART communication, specifically for COM1 and COM2 ports.
 
-## Objectives
-- Understand the architecture and communication protocols of UART.
-- Develop a UART kernel driver compatible with Linux.
-- Learn about kernel module development, including loading, unloading, and interfacing with hardware.
-- Test and validate the UART driver in a Linux environment.
+## Features
+- Implemented as a kernel module `uart.ko`.
+- Accessed as a character device driver.
+- Configurable via module parameters:
+  - `major`: Specifies the major number for device registration.
+  - `option`: Determines the operational mode (`OPTION_BOTH`, `OPTION_COM1`, `OPTION_COM2`).
+- Default values are `major=42` and `option=OPTION_BOTH`.
+- Handles interrupts for COM1 (IRQ 4) and COM2 (IRQ 3).
+- Utilizes `kfifo` for read/write buffers.
+- Synchronization with wait queues for blocking read/write operations.
 
-## Kernel Driver Project
-- **UART Kernel Driver**: Developing a Linux kernel module for UART communication. The driver will handle serial data transmission and reception, interfacing with UART hardware on a given platform.
+## Kernel Module Details
+- **Source Files**:
+  - `uart16550.c`: Main module source code.
+  - `uart16550.h`: Header file with necessary definitions and declarations.
+- **Makefile**: For compiling the kernel module.
 
-## Learning Resources
-- **Linux Device Drivers** book for in-depth understanding of driver development.
-- Linux kernel source code and documentation, particularly for serial and UART subsystems.
-- Online forums and community discussions on kernel development and UART communication.
+## Loading the Module
+- **Load Script**: `load_module.sh` to insert the module with specific parameters.
+- Parameters can be passed to the script, e.g., `sudo ./load_module.sh 42 OPTION_BOTH`.
 
-## Tools and Environment
-- **Fedora Linux**: Primary development and testing platform.
-- **VS Code**: Preferred IDE for writing and debugging code.
-- **Virtual Machines or Hardware Platforms**: For testing the UART driver in different environments and with various UART devices.
+## Testing
+- Automated testing with `_checker` script.
+- Ensure default serial drivers are disabled to avoid conflicts.
 
-## Progress and Milestones
-- [ ] Research and understand UART protocol and its implementation in Linux.
-- [ ] Draft an initial design for the UART kernel driver.
-- [ ] Implement the basic UART driver functions (initialization, data transmission/reception).
-- [ ] Test the driver in a controlled environment (e.g., virtual machine or specific hardware).
-- [ ] Document the driver development process and challenges.
+## Building and Running
+- Compile the module using the provided Makefile.
+- Load the module using `sudo insmod uart.ko major=XX option=YYY`.
+- Test the functionality with `_checker` and custom test scripts.
 
-## Contribution and Collaboration
-- Contributions to the code, especially in terms of optimization and extended functionality, are welcome.
-- If you have experience with UART or Linux kernel development, your insights and suggestions would be greatly appreciated.
+## Contributions
+- Contributions and improvements are welcome, particularly in optimization and extended functionality.
+- For major changes, open an issue first to discuss proposed changes.
 
 ## Contact
 - **Name**: Cade
 - **Institution**: University of Denver
 - **Field of Study**: Computer Engineering
 
-I'm open to feedback, suggestions, and collaborative opportunities. Feel free to reach out for any queries or discussions related to UART kernel driver development!
+Feel free to reach out for any discussions, queries, or collaborations related to this UART kernel driver development project.
 
 ---
 
-This README will be regularly updated to reflect the latest progress, challenges, and learnings from the UART kernel driver project.
+This README will be updated periodically to reflect the latest progress and developments in the `uart.ko` kernel module.
