@@ -16,8 +16,8 @@ This repository contains the development files for a UART kernel module named `u
 
 ## Kernel Module Details
 - **Source Files**:
-  - `uart16550.c`: Main module source code.
-  - `uart16550.h`: Header file with necessary definitions and declarations.
+  - `uart.c`: Main module source code.
+  - `uart.h`: Header file with necessary definitions and declarations.
 - **Makefile**: For compiling the kernel module.
 
 ## Loading the Module
